@@ -61,11 +61,16 @@ app.get("/login", function(req, res){
 
  //login logic
  //middleware -- checks your credentials - sits between start and end of your route
- app.post("/login", passport.authenticate("local", {
+app.post("/login", passport.authenticate("local", {
      successRedirect: "/secret",
      failureRedirect: "/login"
- }) ,function(req, res){
- });
+}) ,function(req, res){
+});
+
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
+});
 
 app.listen(3000, function(){
     console.log("Server started..");
