@@ -39,6 +39,7 @@ app.get("/secret",function(req, res){
 app.get("/register", function(req, res){
     res.render("register"); 
  });
+
  //handling user sign up
  app.post("/register", function(req, res){
      User.register(new User({username: req.body.username}), req.body.password, function(err, user){
@@ -50,6 +51,20 @@ app.get("/register", function(req, res){
             res.redirect("/secret");
          });
      });
+ });
+
+// LOGIN ROUTES
+//render login form
+app.get("/login", function(req, res){
+    res.render("login"); 
+ });
+
+ //login logic
+ //middleware -- checks your credentials - sits between start and end of your route
+ app.post("/login", passport.authenticate("local", {
+     successRedirect: "/secret",
+     failureRedirect: "/login"
+ }) ,function(req, res){
  });
 
 app.listen(3000, function(){
